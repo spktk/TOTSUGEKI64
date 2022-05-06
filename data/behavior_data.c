@@ -390,6 +390,12 @@ enum BehaviorCommands {
     BC_PTR(dropletParams)
 
 
+const BehaviorScript bhvDolphin[] = {
+    BEGIN(OBJ_LIST_DEFAULT),       OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    CALL_NATIVE(bhv_dolphin_init), BEGIN_LOOP(),
+    CALL_NATIVE(bhv_dolphin_loop), END_LOOP(),
+};
+
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),

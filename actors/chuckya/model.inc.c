@@ -62,6 +62,14 @@ ALIGNED8 static const Texture chuckya_seg8_texture_08008F78[] = {
 #include "actors/chuckya/chuckya_body_arm_right_side.rgba16.inc.c"
 };
 
+ALIGNED8 static const Texture chuckya_seg8_texture_08009F78[] = {
+#include "actors/chuckya/chuckya_arm_left.rgba16.inc.c"
+};
+
+ALIGNED8 static const Texture chuckya_seg8_texture_0800AF78[] = {
+#include "actors/chuckya/chuckya_arm_right.rgba16.inc.c"
+};
+
 // 0x08009F78
 static const Vtx chuckya_seg8_vertex_08009F78[] = {
     {{{     0,     56,      0}, 0, {   990,      0}, {0xff, 0xff, 0xff, 0xff}}},
@@ -133,9 +141,9 @@ static const Vtx chuckya_seg8_vertex_0800A120[] = {
     {{{     0,     13,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
 };
 
-// 0x0800A160 - 0x0800A198
+// 0x0800A160 - 0x0800A198 ARM 1
 const Gfx chuckya_seg8_dl_0800A160[] = {
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08007F78),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08009F78),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
     gsSPVertex(chuckya_seg8_vertex_0800A0E0, 4, 0),
@@ -145,7 +153,7 @@ const Gfx chuckya_seg8_dl_0800A160[] = {
 
 // 0x0800A198 - 0x0800A1D0
 const Gfx chuckya_seg8_dl_0800A198[] = {
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08008F78),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_0800AF78),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
     gsSPVertex(chuckya_seg8_vertex_0800A120, 4, 0),
@@ -188,9 +196,9 @@ static const Vtx chuckya_seg8_vertex_0800A288[] = {
     {{{     0,     13,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
 };
 
-// 0x0800A2C8 - 0x0800A300
+// 0x0800A2C8 - 0x0800A300 ARM 2
 const Gfx chuckya_seg8_dl_0800A2C8[] = {
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08007F78),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08009F78),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
     gsSPVertex(chuckya_seg8_vertex_0800A248, 4, 0),
@@ -200,7 +208,7 @@ const Gfx chuckya_seg8_dl_0800A2C8[] = {
 
 // 0x0800A300 - 0x0800A338
 const Gfx chuckya_seg8_dl_0800A300[] = {
-    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08008F78),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_0800AF78),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
     gsSPVertex(chuckya_seg8_vertex_0800A288, 4, 0),

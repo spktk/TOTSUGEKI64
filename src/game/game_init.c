@@ -1,6 +1,7 @@
 #include <ultra64.h>
 
 #include "sm64.h"
+#include "types.h"
 #include "gfx_dimensions.h"
 #include "audio/external.h"
 #include "buffers/buffers.h"
@@ -30,6 +31,7 @@
 #include "debug_box.h"
 #include "vc_check.h"
 
+
 // First 3 controller slots
 struct Controller gControllers[3];
 
@@ -38,6 +40,9 @@ struct SPTask *gGfxSPTask;
 Gfx *gDisplayListHead;
 u8 *gGfxPoolEnd;
 struct GfxPool *gGfxPool;
+
+u16 gGlobalLTrig;
+u16 gGlobalRTrig;
 
 // OS Controllers
 OSContStatus gControllerStatuses[4];
@@ -788,6 +793,20 @@ void thread5_game_loop(UNUSED void *arg) {
         audio_game_loop_tick();
         select_gfx_pool();
         read_controller_inputs(THREAD_5_GAME_LOOP);
+        
+        if (gSaveBuffer.menuData.soundMode == 0){
+            gGlobalLTrig = L_TRIG;
+            gGlobalRTrig = R_TRIG;
+        } else if (gSaveBuffer.menuData.soundMode == 1){
+            //Swap LR
+            gGlobalLTrig = R_TRIG;
+            gGlobalRTrig = L_TRIG;
+        } else {
+            //N64 Mode
+            gGlobalLTrig = R_TRIG;
+            gGlobalRTrig = D_JPAD;
+        }
+
         addr = level_script_execute(addr);
 #if !PUPPYPRINT_DEBUG && defined(VISUAL_DEBUG)
         debug_box_input();

@@ -119,7 +119,7 @@ unsigned char textCopyFileButton[] = { TEXT_COPY_FILE_BUTTON };
 
 unsigned char textEraseFileButton[] = { TEXT_ERASE_FILE_BUTTON };
 
-unsigned char textSoundModes[][8] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } };
+unsigned char textSoundModes[][9] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } };
 
 #if MULTILANG
 unsigned char textLanguageSelect[][17] = {  { TEXT_LANGUAGE_SELECT }};
@@ -854,7 +854,7 @@ void render_sound_mode_menu_buttons(struct Object *soundModeButton) {
     sMainMenuButtons[MENU_BUTTON_STEREO] = spawn_object_rel_with_rot(
         soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton,  533, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
     sMainMenuButtons[MENU_BUTTON_STEREO]->oMenuButtonScale = MENU_BUTTON_SCALE;
-    // Mono option button
+    // // Mono option button
     sMainMenuButtons[MENU_BUTTON_MONO] = spawn_object_rel_with_rot(
         soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton,    0, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
     sMainMenuButtons[MENU_BUTTON_MONO]->oMenuButtonScale = MENU_BUTTON_SCALE;
@@ -920,6 +920,7 @@ void check_sound_mode_menu_clicked_buttons(struct Object *soundModeButton) {
                         save_file_set_sound_mode(sSoundMode);
                     }
                 }
+                
 #if MULTILANG
                 // If language mode button clicked, select it and change language
                 if (buttonID == MENU_BUTTON_LANGUAGE_ENGLISH || buttonID == MENU_BUTTON_LANGUAGE_FRENCH
@@ -1454,8 +1455,8 @@ void print_main_menu_strings(void) {
     print_generic_string(SCORE_X, 39, textScore);
     print_generic_string(COPY_X, 39, textCopy);
     print_generic_string(ERASE_X, 39, textErase);
-    sSoundTextX = get_str_x_pos_from_center(254, textSoundModes[sSoundMode], 10.0f);
-    print_generic_string(sSoundTextX, 39, textSoundModes[sSoundMode]);
+    sSoundTextX = get_str_x_pos_from_center(254, textSoundSelect, 10.0f);
+    print_generic_string(sSoundTextX, 39, textSoundSelect);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
     // Print file names
     gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_begin);

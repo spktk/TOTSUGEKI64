@@ -549,6 +549,23 @@ void bhv_intro_scene_loop(void);
 void bhv_dust_smoke_loop(void);
 void bhv_yoshi_loop(void);
 void bhv_volcano_trap_loop(void);
+void bhv_dolphin_init(void);
+void bhv_dolphin_loop(void);
+void bhv_npc_init(void);
+void bhv_npc_loop(void);
+void bhv_intro_init(void);
+void bhv_intro_loop(void);
+void bhv_custom_cam_loop(void);
+void bhv_custom_cam_init(void);
+void bhv_custom_cam_focus_loop(void);
+void bhv_intro_cutscene_loop(void);
+void bhv_intro_generic_object_loop(void);
+void bhv_switch_animation_init(void);
+void bhv_switch_animation_loop(void);
+void bhv_geofront_elevator_loop(void);
+void bhv_custom_cam_volume_loop(void);
+void bhv_custom_cam_volume_focus_loop(void);
+void bhv_custom_cam_volume_cam_loop(void);
 
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 

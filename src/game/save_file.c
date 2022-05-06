@@ -691,7 +691,7 @@ s32 save_file_get_num_lives(void) {
 #endif
 
 void save_file_set_sound_mode(u16 mode) {
-    set_sound_mode(mode);
+    set_sound_mode(0);
     gSaveBuffer.menuData.soundMode = mode;
 
     gMainMenuDataModified = TRUE;

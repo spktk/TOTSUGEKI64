@@ -26,6 +26,8 @@
 
 #include "sparkle_animation/model.inc.c"
 
+#include "dolphin/model.inc.c"
+
 #ifdef S2DEX_TEXT_ENGINE
 #include "src/s2d_engine/config.h"
 #include FONT_C_FILE

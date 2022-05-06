@@ -79,7 +79,7 @@ struct GraphNodeObject gMirrorMario;  // copy of Mario's geo node for drawing mi
 // This whole file is weirdly organized. It has to be the same file due
 // to rodata boundaries and function aligns, which means the programmer
 // treated this like a "misc" file for vaguely Mario related things
-// (message NPC related things, the Mario head geo, and Mario geo
+// (message npc related things, the Mario head geo, and Mario geo
 // functions)
 
 #ifdef KEEP_MARIO_HEAD

@@ -16,6 +16,9 @@
 #include "rumble_init.h"
 
 #include "config.h"
+#include "behavior_data.h"
+#include "types.h"
+#include "game_init.h"
 
 void play_flip_sounds(struct MarioState *m, s16 frame1, s16 frame2, s16 frame3) {
     s32 animFrame = m->marioObj->header.gfx.animInfo.animFrame;
@@ -461,6 +464,10 @@ s32 act_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
     common_air_action_step(m, ACT_JUMP_LAND, MARIO_ANIM_SINGLE_JUMP,
                            AIR_STEP_CHECK_LEDGE_GRAB | AIR_STEP_CHECK_HANG);
@@ -478,6 +485,10 @@ s32 act_double_jump(struct MarioState *m) {
 
     if (m->input & INPUT_Z_PRESSED) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
+    }
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
     }
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_HOOHOO);
@@ -499,6 +510,10 @@ s32 act_triple_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
 
     common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, MARIO_ANIM_TRIPLE_JUMP, 0);
@@ -514,6 +529,10 @@ s32 act_triple_jump(struct MarioState *m) {
 s32 act_backflip(struct MarioState *m) {
     if (m->input & INPUT_Z_PRESSED) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
+    }
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
     }
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAH_WAH_HOO);
@@ -536,6 +555,10 @@ s32 act_freefall(struct MarioState *m) {
 
     if (m->input & INPUT_Z_PRESSED) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
+    }
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
     }
 
     switch (m->actionArg) {
@@ -608,6 +631,10 @@ s32 act_side_flip(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, 0);
 
     if (common_air_action_step(m, ACT_SIDE_FLIP_LAND, MARIO_ANIM_SLIDEFLIP, AIR_STEP_CHECK_LEDGE_GRAB)
@@ -630,6 +657,10 @@ s32 act_wall_kick_air(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     play_mario_jump_sound(m);
     common_air_action_step(m, ACT_JUMP_LAND, MARIO_ANIM_SLIDEJUMP, AIR_STEP_CHECK_LEDGE_GRAB);
     return FALSE;
@@ -641,6 +672,10 @@ s32 act_long_jump(struct MarioState *m) {
         animation = MARIO_ANIM_FAST_LONGJUMP;
     } else {
         animation = MARIO_ANIM_SLOW_LONGJUMP;
+    }
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
     }
 
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAHOO);
@@ -686,6 +721,10 @@ s32 act_riding_shell_air(struct MarioState *m) {
 s32 act_twirling(struct MarioState *m) {
     s16 startTwirlYaw = m->twirlYaw;
     s16 yawVelTarget;
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
 
 #ifdef Z_TWIRL
     if (m->input & INPUT_Z_DOWN) {
@@ -834,6 +873,10 @@ s32 act_water_jump(struct MarioState *m) {
         mario_set_forward_vel(m, 15.0f);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     play_mario_sound(m, SOUND_ACTION_WATER_JUMP, 0);
     set_mario_animation(m, MARIO_ANIM_SINGLE_JUMP);
 
@@ -922,6 +965,11 @@ s32 act_steep_jump(struct MarioState *m) {
 }
 
 s32 act_ground_pound(struct MarioState *m) {
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     u32 stepResult;
     f32 yOffset;
 
@@ -2001,6 +2049,72 @@ s32 act_special_triple_jump(struct MarioState *m) {
     return FALSE;
 }
 
+s32 act_totsugeki(struct MarioState *m) {
+
+    if (m->actionTimer == 0) {
+        m->vel[1] = 45.0f;
+        m->canTotsu = 0.0f;
+        m->usedObj = spawn_object(m->marioObj, MODEL_DOLPHIN, bhvDolphin);
+        if ((random_u16() % 2) == 1) {
+            play_sound(SOUND_MARIO_PRESS_START_TO_PLAY, m->marioObj->header.gfx.cameraToObject);
+        } else {
+            play_sound(SOUND_MARIO_SO_LONGA_BOWSER, m->marioObj->header.gfx.cameraToObject);
+        }
+        m->totsuTimer = 30;
+    }
+
+    if (m->input & INPUT_B_PRESSED) {
+        return set_mario_action(m, ACT_DIVE, 0);
+    }
+
+    if (m->input & INPUT_Z_PRESSED) {
+        return set_mario_action(m, ACT_GROUND_POUND, 0);
+    }
+
+    if ((gPlayer1Controller->buttonPressed & gGlobalLTrig) && m->actionTimer >= 5) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
+    }
+
+    set_mario_animation(m, MARIO_ANIM_DIVE);
+
+    mario_set_forward_vel(m, 60.0f);
+
+    if (m->vel[1] > 0.0f) {
+        m->vel[1] -= 4.0f;
+    } else {
+        m->vel[1] = 0.0f;
+    }
+
+    if (m->actionTimer >= 5) {
+        m->flags |= MARIO_KICKING;
+    }
+
+    update_air_without_turn(m);
+
+    switch (perform_air_step(m, 0)) {
+        case AIR_STEP_LANDED:
+            if (m->actionState++ == 0) {
+                m->vel[1] = 42.0f;
+            } else {
+                set_mario_action(m, ACT_FREEFALL_LAND_STOP, 0);
+            }
+            play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
+            break;
+
+        case AIR_STEP_HIT_WALL:
+            mario_bonk_reflection(m, FALSE);
+            break;
+    }
+
+    if (m->actionTimer > m->totsuTimer) {
+        return set_mario_action(m, ACT_FREEFALL, 0);
+    }
+
+    m->actionTimer++;
+
+    return FALSE;
+}
+
 s32 check_common_airborne_cancels(struct MarioState *m) {
     if (m->pos[1] < m->waterLevel - 100) {
         return set_water_plunge_action(m);
@@ -2076,6 +2190,7 @@ s32 mario_execute_airborne_action(struct MarioState *m) {
         case ACT_RIDING_HOOT:          cancel = act_riding_hoot(m);          break;
         case ACT_TOP_OF_POLE_JUMP:     cancel = act_top_of_pole_jump(m);     break;
         case ACT_VERTICAL_WIND:        cancel = act_vertical_wind(m);        break;
+        case ACT_TOTSUGEKI:            cancel = act_totsugeki(m);            break;
     }
     /* clang-format on */
 

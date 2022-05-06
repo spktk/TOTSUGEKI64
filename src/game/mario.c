@@ -1574,7 +1574,7 @@ u32 update_and_return_cap_flags(struct MarioState *m) {
         action = m->action;
 
         if ((m->capTimer <= 60)
-            || ((action != ACT_READING_AUTOMATIC_DIALOG) && (action != ACT_READING_NPC_DIALOG)
+            || ((action != ACT_READING_AUTOMATIC_DIALOG) && (action != ACT_READING_npc_DIALOG)
                 && (action != ACT_READING_SIGN) && (action != ACT_IN_CANNON))) {
             m->capTimer -= 1;
         }

@@ -83,7 +83,7 @@
 
 // Ingame Menu
 #define TEXT_PAUSE _("PAUSE") // Pause text, Castle Courses
-#define TEXT_HUD_CONGRATULATIONS _("CONGRATULATIONS") // Course Complete Text, Bowser Courses
+#define TEXT_HUD_CONGRATULATIONS _("SLASH!") // Course Complete Text, Bowser Courses
 
 //Widescreen stuff
 #if defined(WIDE) && !defined(PUPPYCAM)
@@ -197,16 +197,16 @@
  * File Select Text
  */
 // Main Screens
-#define TEXT_MARIO _("MARIO") // View Score Menu
+#define TEXT_MARIO _("MAY") // View Score Menu
 #define TEXT_SELECT_FILE _("SELECT FILE")
 #define TEXT_CHECK_FILE _("CHECK FILE")
 #define TEXT_COPY_FILE _("COPY FILE")
 #define TEXT_ERASE_FILE _("ERASE FILE")
-#define TEXT_SOUND_SELECT _("SOUND SELECT")
-#define TEXT_FILE_MARIO_A _("MARIO A")
-#define TEXT_FILE_MARIO_B _("MARIO B")
-#define TEXT_FILE_MARIO_C _("MARIO C")
-#define TEXT_FILE_MARIO_D _("MARIO D")
+#define TEXT_SOUND_SELECT _("CONTROLS")
+#define TEXT_FILE_MARIO_A _("MAY A")
+#define TEXT_FILE_MARIO_B _("MAY B")
+#define TEXT_FILE_MARIO_C _("MAY C")
+#define TEXT_FILE_MARIO_D _("MAY D")
 
 // Menu Options
 #define TEXT_SCORE _("SCORE")
@@ -214,9 +214,9 @@
 #define TEXT_ERASE _("ERASE")
 
 // Sound Options
-#define TEXT_STEREO _("STEREO")
-#define TEXT_MONO _("MONO")
-#define TEXT_HEADSET _("HEADSET")
+#define TEXT_STEREO _("ORIGINAL")
+#define TEXT_MONO _("SWAP LR")
+#define TEXT_HEADSET _("N64 MODE")
 
 // Misc Menu Text
 #define TEXT_SAVED_DATA_EXISTS _("SAVED DATA EXITS") // Misspell
@@ -246,7 +246,7 @@
 #define TEXT_SURE _("SURE?")
 #define TEXT_YES _("YES")
 #define TEXT_NO _("NO")
-#define TEXT_FILE_MARIO_A_JUST_ERASED _("MARIO A JUST ERASED")
+#define TEXT_FILE_MARIO_A_JUST_ERASED _("MAY A JUST ERASED")
 
 /**
  * Menus Text (Pause, Course Completed)
@@ -261,7 +261,7 @@
 #endif
 
 // Camera Options
-#define TEXT_LAKITU_MARIO _("LAKITU + MARIO")
+#define TEXT_LAKITU_MARIO _("LAKITU + MAY")
 #define TEXT_LAKITU_STOP _("LAKITU + STOP")
 #define TEXT_NORMAL_UPCLOSE __("(NORMAL)(UP-CLOSE)")
 #define TEXT_NORMAL_FIXED __("(NORMAL)(FIXED)")
@@ -279,15 +279,15 @@
 /**
  * Ending Peach cutscene text.
  */
-#define TEXT_FILE_MARIO_EXCLAMATION _("Mario!")
+#define TEXT_FILE_MARIO_EXCLAMATION _("May!")
 #define TEXT_POWER_STARS_RESTORED __("The power of the Stars is restored to the castle...")
 #define TEXT_THANKS_TO_YOU __("...and it's all thanks to you!")
-#define TEXT_THANK_YOU_MARIO __("Thank you, Mario!")
+#define TEXT_THANK_YOU_MARIO __("Thank you, May!")
 #define TEXT_SOMETHING_SPECIAL __("We have to do something special for you...")
 #define TEXT_LISTEN_EVERYBODY _("Listen, everybody,")
 #define TEXT_LETS_HAVE_CAKE _("let's bake a delicious cake...")
-#define TEXT_FOR_MARIO _("...for Mario...")
-#define TEXT_FILE_MARIO_QUESTION _("Mario!")
+#define TEXT_FOR_MARIO _("...for May...")
+#define TEXT_FILE_MARIO_QUESTION _("May!")
 
 #endif
 

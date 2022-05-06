@@ -3,6 +3,7 @@
 
 #include "types.h"
 
+extern const BehaviorScript bhvDolphin[];
 extern const BehaviorScript bhvStarDoor[];
 extern const BehaviorScript bhvMrI[];
 extern const BehaviorScript bhvMrIIris[];

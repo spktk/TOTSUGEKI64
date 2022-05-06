@@ -294,7 +294,7 @@ void cutscene_put_cap_on(struct MarioState *m) {
 }
 
 /**
- * mario_ready_to_speak: Determine if Mario is able to speak to a NPC
+ * mario_ready_to_speak: Determine if Mario is able to speak to a npc
  * The following conditions must be met in order for Mario to be considered
  * ready to speak.
  * 1: Mario's action must be in the stationary or moving action groups, or if
@@ -326,7 +326,7 @@ s32 set_mario_npc_dialog(s32 actionArg) {
     s32 dialogState = MARIO_DIALOG_STATUS_NONE;
 
     // in dialog
-    if (gMarioState->action == ACT_READING_NPC_DIALOG) {
+    if (gMarioState->action == ACT_READING_npc_DIALOG) {
         if (gMarioState->actionState < 8) {
             dialogState = MARIO_DIALOG_STATUS_START; // starting dialog
         }
@@ -339,7 +339,7 @@ s32 set_mario_npc_dialog(s32 actionArg) {
         }
     } else if (actionArg != MARIO_DIALOG_STOP && mario_ready_to_speak()) {
         gMarioState->usedObj = gCurrentObject;
-        set_mario_action(gMarioState, ACT_READING_NPC_DIALOG, actionArg);
+        set_mario_action(gMarioState, ACT_READING_npc_DIALOG, actionArg);
         dialogState = MARIO_DIALOG_STATUS_START; // starting dialog
     }
 
@@ -366,7 +366,7 @@ s32 act_reading_npc_dialog(struct MarioState *m) {
     }
 
     if (m->actionState < 8) {
-        // turn to NPC
+        // turn to npc
         m->faceAngle[1] = approach_angle(m->faceAngle[1], mario_obj_angle_to_object(m, m->usedObj), 0x800);
         // turn head to npc
         m->actionTimer += headTurnAmount;
@@ -374,7 +374,7 @@ s32 act_reading_npc_dialog(struct MarioState *m) {
         set_mario_animation(m, m->heldObj == NULL ? MARIO_ANIM_FIRST_PERSON
                                                   : MARIO_ANIM_IDLE_WITH_LIGHT_OBJ);
     } else if (m->actionState >= 9 && m->actionState < 17) {
-        // look back from facing NPC
+        // look back from facing npc
         m->actionTimer -= headTurnAmount;
     } else if (m->actionState == 23) {
         if (m->flags & MARIO_CAP_IN_HAND) {
@@ -2644,7 +2644,7 @@ s32 mario_execute_cutscene_action(struct MarioState *m) {
         case ACT_STAR_DANCE_WATER:           cancel = act_star_dance_water(m);           break;
         case ACT_FALL_AFTER_STAR_GRAB:       cancel = act_fall_after_star_grab(m);       break;
         case ACT_READING_AUTOMATIC_DIALOG:   cancel = act_reading_automatic_dialog(m);   break;
-        case ACT_READING_NPC_DIALOG:         cancel = act_reading_npc_dialog(m);         break;
+        case ACT_READING_npc_DIALOG:         cancel = act_reading_npc_dialog(m);         break;
         case ACT_DEBUG_FREE_MOVE:            cancel = act_debug_free_move(m);            break;
         case ACT_READING_SIGN:               cancel = act_reading_sign(m);               break;
         case ACT_JUMBO_STAR_CUTSCENE:        cancel = act_jumbo_star_cutscene(m);        break;

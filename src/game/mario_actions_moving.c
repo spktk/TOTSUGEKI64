@@ -14,7 +14,7 @@
 #include "memory.h"
 #include "behavior_data.h"
 #include "rumble_init.h"
-
+#include "game_init.h"
 #include "config.h"
 
 struct LandingAction {
@@ -789,6 +789,11 @@ s32 act_walking(struct MarioState *m) {
         return set_mario_action(m, ACT_CROUCH_SLIDE, 0);
     }
 
+
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     m->actionState = ACT_STATE_WALKING_NO_WALL;
 
     vec3f_copy(startPos, m->pos);
@@ -1045,6 +1050,10 @@ s32 act_braking(struct MarioState *m) {
         return set_mario_action(m, ACT_MOVE_PUNCHING, 0);
     }
 
+    if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+        return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
+
     switch (perform_ground_step(m)) {
         case GROUND_STEP_LEFT_GROUND:
             set_mario_action(m, ACT_FREEFALL, 0);
@@ -1088,6 +1097,9 @@ s32 act_decelerating(struct MarioState *m) {
         if (m->input & INPUT_Z_PRESSED) {
             return set_mario_action(m, ACT_CROUCH_SLIDE, 0);
         }
+        if ((gPlayer1Controller->buttonDown & gGlobalLTrig) && m->canTotsu == 1 && m->totsuUnlocked == 1) {
+             return set_mario_action(m, ACT_TOTSUGEKI, 0);
+    }
     }
 
     if (update_decelerating_speed(m)) {

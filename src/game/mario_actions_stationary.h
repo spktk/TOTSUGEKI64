@@ -88,5 +88,5 @@ s32 act_ground_pound_land(struct MarioState *m);
 s32 act_first_person(struct MarioState *m);
 s32 check_common_stationary_cancels(struct MarioState *m);
 s32 mario_execute_stationary_action(struct MarioState *m);
-
+s32 act_totsugeki(struct MarioState *m);
 #endif // MARIO_ACTIONS_STATIONARY

@@ -1,151 +1,198 @@
-// chuckya.inc.c
+// chuckya.c.inc
+
+
+struct UnusedChuckyaData {
+    u8 unk0;
+    f32 unk4;
+    f32 unk8;
+};
 
 void common_anchor_mario_behavior(f32 forwardVel, f32 yVel, s32 flag) {
     switch (o->parentObj->oCommonAnchorAction) {
         case 0:
             break;
-
         case 1:
             obj_set_gfx_pos_at_obj_pos(gMarioObject, o);
-            break;
 
+            break;
         case 2:
-            gMarioObject->oInteractStatus |= flag + INT_STATUS_MARIO_THROWN_BY_OBJ;
+            gMarioObject->oInteractStatus |= (flag + INT_STATUS_MARIO_THROWN_BY_OBJ);
             gMarioStates[0].forwardVel = forwardVel;
             gMarioStates[0].vel[1] = yVel;
             o->parentObj->oCommonAnchorAction = 0;
             break;
-
         case 3:
-            gMarioObject->oInteractStatus |= INT_STATUS_MARIO_THROWN_BY_OBJ | INT_STATUS_MARIO_DROPPED_BY_OBJ; // loads 2 interactions at once?
+            gMarioObject->oInteractStatus |=
+                (INT_STATUS_MARIO_THROWN_BY_OBJ + INT_STATUS_MARIO_DROPPED_BY_OBJ); // loads 2 interactions at once?
             gMarioStates[0].forwardVel = 10.0f;
             gMarioStates[0].vel[1] = 10.0f;
             o->parentObj->oCommonAnchorAction = 0;
             break;
     }
-
     o->oMoveAngleYaw = o->parentObj->oMoveAngleYaw;
-    if (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED) {
+    if (o->parentObj->activeFlags == ACTIVE_FLAG_DEACTIVATED)
         obj_mark_for_deletion(o);
-    }
 }
 
 void bhv_chuckya_anchor_mario_loop(void) {
     common_anchor_mario_behavior(40.0f, 40.0f, INT_STATUS_MARIO_DROPPED_BY_OBJ);
 }
 
+s32 unknown_chuckya_function(s32 updateAngle, f32 latDist, f32 dist, s32 time) {
+    s32 ret = 0;
+    if (o->oChuckyaUnused != 4) {
+        if (latDist < cur_obj_lateral_dist_from_mario_to_home()) {
+            if (cur_obj_lateral_dist_to_home() < 200.0f) {
+                ret = 0;
+            } else {
+                ret = 1;
+                o->oAngleToMario = cur_obj_angle_to_home();
+            }
+        } else if (o->oDistanceToMario > dist) {
+            if ((gGlobalTimer % (s16) time) == 0) {
+                o->oAngleToMario = obj_angle_to_object(o, gMarioObject);
+            }
+            ret = 2;
+        } else {
+            ret = 3;
+        }
+        if (updateAngle && update_angle_from_move_flags(&o->oAngleToMario)) {
+            ret = 4;
+            o->oChuckyaUnused = 4;
+        }
+    } else {
+        ret = 4;
+    }
+    return ret;
+}
+
+s32 approach_forward_vel(f32 *arr, f32 target, f32 inc) {
+    if (arr[0] > target) {
+        arr[0] -= inc;
+        if (arr[0] < target)
+            arr[0] = target;
+    } else if (arr[0] < target) {
+        arr[0] += inc;
+        if (arr[0] > target)
+            arr[0] = target;
+    } else {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 void chuckya_act_0(void) {
     s32 initialSubAction;
-
-    if (o->oTimer == 0) {
+    if (o->oTimer == 0)
         o->oChuckyaSubActionTimer = 0;
-    }
-
     o->oAngleToMario = obj_angle_to_object(o, gMarioObject);
-
     switch (initialSubAction = o->oSubAction) {
         case 0:
-            o->oForwardVel = 0.0f;
+            o->oForwardVel = 0;
             if (cur_obj_lateral_dist_from_mario_to_home() < 2000.0f) {
                 cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x400);
                 if (o->oChuckyaSubActionTimer > 40
-                    || abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < 0x1000) {
+                    || abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < 0x1000)
                     o->oSubAction = 1;
-                }
-            } else {
+            } else
                 o->oSubAction = 3;
-            }
             break;
-
         case 1:
-            approach_f32_symmetric_bool(&o->oForwardVel, 30.0f, 4.0f);
-            if (abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) > 0x4000) {
+            approach_forward_vel(&o->oForwardVel, 30.0f, 4.0f);
+            if (abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) > 0x4000)
                 o->oSubAction = 2;
-            }
-            if (cur_obj_lateral_dist_from_mario_to_home() > 2000.0f) {
+            if (cur_obj_lateral_dist_from_mario_to_home() > 2000.0f)
                 o->oSubAction = 3;
-            }
             break;
-
         case 2:
-            approach_f32_symmetric_bool(&o->oForwardVel, 0, 4.0f);
-            if (o->oChuckyaSubActionTimer > 48) {
+            approach_forward_vel(&o->oForwardVel, 0, 4.0f);
+            if (o->oChuckyaSubActionTimer > 48)
                 o->oSubAction = 0;
-            }
             break;
-
         case 3:
-            if (cur_obj_lateral_dist_to_home() < 500.0f) {
-                o->oForwardVel = 0.0f;
-            } else {
-                approach_f32_symmetric_bool(&o->oForwardVel, 10.0f, 4.0f);
+            if (cur_obj_lateral_dist_to_home() < 500.0f)
+                o->oForwardVel = 0;
+            else {
+                approach_forward_vel(&o->oForwardVel, 10.0f, 4.0f);
                 o->oAngleToMario = cur_obj_angle_to_home();
                 cur_obj_rotate_yaw_toward(o->oAngleToMario, 0x800);
             }
-            if (cur_obj_lateral_dist_from_mario_to_home() < 1900.0f) {
+            if (cur_obj_lateral_dist_from_mario_to_home() < 1900.0f)
                 o->oSubAction = 0;
-            }
             break;
     }
-
-    if (o->oSubAction != initialSubAction) {
+    if (o->oSubAction != initialSubAction)
         o->oChuckyaSubActionTimer = 0;
-    } else {
+    else
         o->oChuckyaSubActionTimer++;
-    }
-
     cur_obj_init_animation_with_sound(4);
-
-    if (o->oForwardVel > 1.0f) {
+    if (o->oForwardVel > 1.0f)
         cur_obj_play_sound_1(SOUND_AIR_CHUCKYA_MOVE);
-    }
-
     print_debug_bottom_up("sp %d", o->oForwardVel);
 }
 
 void chuckya_act_1(void) {
+    gMarioStates[0].pos[1] = o->oPosY;
+    
     if (o->oSubAction == 0) {
+        if (o->oChuckyaSubActionTimer == 0) {
+            cur_obj_play_sound_2(SOUND_PEACH_DEAR_MARIO);
+		}
         if (cur_obj_init_animation_and_check_if_near_end(0)) {
             o->oSubAction++;
-        }
-        o->oChuckyaSubActionTimer = random_float() * 30.0f + 10.0f;
+            
+		}
+        o->oTimer = 0;
+        o->oChuckyaSubActionTimer = 120;
+        
         o->oChuckyaNumPlayerEscapeActions = 0;
         o->oForwardVel = 0.0f;
+        
     } else {
         if (o->oSubAction == 1) {
             o->oChuckyaNumPlayerEscapeActions += player_performed_grab_escape_action();
             print_debug_bottom_up("%d", o->oChuckyaNumPlayerEscapeActions);
-            if (o->oChuckyaNumPlayerEscapeActions > 10) {
+            if (o->oTimer == 80) {
+                o->oVelY = 140;
+            }
+            /*gCamera->focus[0] = o->oPosX;
+            gCamera->focus[1] = o->oPosY;
+            gCamera->focus[2] = o->oPosZ;*/
+            
+
+            if (o->oChuckyaNumPlayerEscapeActions > 50) {
                 o->oCommonAnchorAction = 3;
                 o->oAction = 3;
-                o->oInteractStatus &= ~INT_STATUS_GRABBED_MARIO;
+                o->oInteractStatus &= ~(INT_STATUS_GRABBED_MARIO);
             } else {
                 cur_obj_init_animation_with_sound(1);
                 o->oMoveAngleYaw += INT_STATUS_GRABBED_MARIO;
-                if (o->oChuckyaSubActionTimer-- < 0
-                 && (check_if_moving_over_floor(50.0f, 150.0f) || o->oChuckyaSubActionTimer < -16)) {
-                    o->oSubAction++;
-                }
+                
+                if (o->oChuckyaSubActionTimer-- < 0)
+					if (check_if_moving_over_floor(50.0f, 150.0f)|| o->oChuckyaSubActionTimer < -16) {
+                        gMarioStates[0].health -= 0x440;
+                            o->oSubAction++;
+                    }
             }
         } else {
             cur_obj_init_animation_with_sound(3);
             if (cur_obj_check_anim_frame(18)) {
                 cur_obj_play_sound_2(SOUND_OBJ_RELEASE_MARIO);
+                
                 o->oCommonAnchorAction = 2;
                 o->oAction = 3;
-                o->oInteractStatus &= ~INT_STATUS_GRABBED_MARIO;
+                o->oInteractStatus &= ~(INT_STATUS_GRABBED_MARIO);
             }
         }
     }
 }
 
 void chuckya_act_3(void) {
-    o->oForwardVel = 0.0f;
-    o->oVelY = 0.0f;
+    o->oForwardVel = 0;
+    o->oVelY = 0;
     cur_obj_init_animation_with_sound(4);
-    if (o->oTimer > 100) {
+    if (o->oTimer > 100)
         o->oAction = 0;
-    }
 }
 
 void chuckya_act_2(void) {
@@ -156,12 +203,7 @@ void chuckya_act_2(void) {
     }
 }
 
-ObjActionFunc sChuckyaActions[] = {
-    chuckya_act_0,
-    chuckya_act_1,
-    chuckya_act_2,
-    chuckya_act_3,
-};
+void (*sChuckyaActions[])(void) = { chuckya_act_0, chuckya_act_1, chuckya_act_2, chuckya_act_3 };
 
 void chuckya_move(void) {
     cur_obj_update_floor_and_walls();
@@ -169,6 +211,7 @@ void chuckya_move(void) {
     cur_obj_move_standard(-30);
     if (o->oInteractStatus & INT_STATUS_GRABBED_MARIO) {
         o->oAction = 1;
+        cur_obj_play_sound_2(SOUND_PEACH_DEAR_MARIO);
         o->oCommonAnchorAction = 1;
         cur_obj_play_sound_2(SOUND_OBJ_GRAB_MARIO);
     }
